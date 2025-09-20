@@ -1,0 +1,31 @@
+# Variables de entorno (contienen passwords)
+.env
+.env.local
+.env.production
+
+# Volúmenes de Docker
+postgres_data/
+mongo_data/
+redis_data/
+file_storage/
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+.dockerignore
+
+# Backup files
+*.backup
+*.bak
