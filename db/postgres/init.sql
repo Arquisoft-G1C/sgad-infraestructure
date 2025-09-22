@@ -128,9 +128,9 @@ CREATE INDEX idx_tariffs_sport_role ON tariffs(sport, role);
 
 -- Usuario Administrador
 INSERT INTO users (email, password_hash, role, first_name, last_name, phone) VALUES
-('admin@sgad.com', '$2b$10$rQZc6rHFyF1aNbVq7Y3Rz.K5zH7mXpP9GcD8hE2nJ4kF3iL6oW8sQ', 'administrador', 'Carlos', 'Administrador', '+57-300-1234567'),
-('arbitro1@sgad.com', '$2b$10$rQZc6rHFyF1aNbVq7Y3Rz.K5zH7mXpP9GcD8hE2nJ4kF3iL6oW8sQ', 'arbitro', 'Juan', 'Pérez', '+57-300-7654321'),
-('presidente@sgad.com', '$2b$10$rQZc6rHFyF1aNbVq7Y3Rz.K5zH7mXpP9GcD8hE2nJ4kF3iL6oW8sQ', 'presidente', 'María', 'González', '+57-300-1111111');
+('admin@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'administrador', 'Carlos', 'Administrador', '3001234567'),
+('arbitro1@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'arbitro', 'Juan', 'Pérez', '3007654321'),
+('presidente@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'presidente', 'María', 'González', '3001111111');
 
 -- Equipos de prueba
 INSERT INTO teams (name, category, sport) VALUES
