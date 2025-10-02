@@ -128,7 +128,7 @@ CREATE INDEX idx_tariffs_sport_role ON tariffs(sport, role);
 
 -- Usuario Administrador
 INSERT INTO users (email, password_hash, role, first_name, last_name, phone) VALUES
-('admin@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'administrador', 'Carlos', 'Administrador', '3001234567'),
+('admin@sgad.com', '$2b$10$aG7ufZPBDHUrGMmEarFc9u6wZeP1ieXEiY/Hv4irhcssmb.0bjiba', 'administrador', 'Carlos', 'Administrador', '3001234567'),
 ('arbitro1@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'arbitro', 'Juan', 'Pérez', '3007654321'),
 ('presidente@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'presidente', 'María', 'González', '3001111111');
 
