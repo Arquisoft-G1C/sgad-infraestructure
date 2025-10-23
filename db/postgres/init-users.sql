@@ -33,9 +33,9 @@ CREATE INDEX idx_users_is_active ON users(is_active);
 -- DATOS INICIALES PARA TESTING
 -- ====================
 
--- Usuarios de prueba (Passwords: admin=password123, others=password)
+-- Usuarios de prueba (Passwords: admin=admin123, others=password)
 INSERT INTO users (email, password_hash, role, first_name, last_name, phone) VALUES
-('admin@sgad.com', '$2b$10$UVHvr6xivkqO0AhRN/2caeWrcdC2DW.46xd0jj7HYKoN.30OD61Em', 'administrador', 'Carlos', 'Administrador', '3001234567'),
+('admin@sgad.com', '$2b$10$/4Cqro6EiOtNVQcFEFjW/OMk0OtUQQoNwZUTPgZhADZRMjEU9qlUG', 'administrador', 'Carlos', 'Administrador', '3001234567'),
 ('arbitro1@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'arbitro', 'Juan', 'Pérez', '3007654321'),
 ('arbitro2@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'arbitro', 'María', 'López', '3007654322'),
 ('presidente@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'presidente', 'María', 'González', '3001111111');
