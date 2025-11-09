@@ -3,6 +3,8 @@
 -- =====================================================
 -- This database contains user authentication data
 
+\c users_db administrador
+
 -- Extensiones necesarias
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -35,10 +37,13 @@ CREATE INDEX idx_users_is_active ON users(is_active);
 
 -- Usuarios de prueba (Passwords: admin=admin123, others=password)
 INSERT INTO users (email, password_hash, role, first_name, last_name, phone) VALUES
-('admin@sgad.com', '$2b$10$/4Cqro6EiOtNVQcFEFjW/OMk0OtUQQoNwZUTPgZhADZRMjEU9qlUG', 'administrador', 'Carlos', 'Administrador', '3001234567'),
+-- ('admin@sgad.com', '$2b$10$/4Cqro6EiOtNVQcFEFjW/OMk0OtUQQoNwZUTPgZhADZRMjEU9qlUG', 'administrador', 'Carlos', 'Administrador', '3001234567'),
 ('arbitro1@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'arbitro', 'Juan', 'Pérez', '3007654321'),
 ('arbitro2@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'arbitro', 'María', 'López', '3007654322'),
-('presidente@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'presidente', 'María', 'González', '3001111111');
+('presidente@sgad.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'presidente', 'María', 'González', '3001111111'),
+('admin123@sgad.com', '$2a$12$/RhjVlH2Ax0/SI/lwBI08ecgH0e8uTVO3OJEw2bswrjmgEdXeqmK.', 'administrador', 'tomas', 'admin', '3001234333')
+ON CONFLICT (email) DO NOTHING;
+
 
 -- Mensaje de confirmación
 SELECT 'users_db initialized successfully!' as status;
