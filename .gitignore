@@ -1,5 +1,4 @@
 # Variables de entorno (contienen passwords)
-.env
 .env.local
 .env.production
 
