@@ -1,7 +1,3 @@
-# Variables de entorno (contienen passwords)
-.env.local
-.env.production
-
 # Volúmenes de Docker
 postgres_data/
 mongo_data/
