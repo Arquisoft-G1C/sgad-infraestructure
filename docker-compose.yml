@@ -482,21 +482,20 @@ services:
       context: ./sgad-frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:${REVERSE_PROXY_PORT}/api
-        NEXT_PUBLIC_WS_URL: ws://localhost:${REVERSE_PROXY_PORT}/ws
+        NEXT_PUBLIC_API_URL: http://localhost/api  # Sin puerto si usas 80
+        NEXT_PUBLIC_WS_URL: ws://localhost/ws
     container_name: sgad-frontend
     environment:
       NODE_ENV: ${NODE_ENV}
       PORT: ${FRONTEND_PORT}
-      # Client-side URLs - apuntan al reverse proxy
-      NEXT_PUBLIC_API_URL: http://localhost:${REVERSE_PROXY_PORT}/api
-      NEXT_PUBLIC_WS_URL: ws://localhost:${REVERSE_PROXY_PORT}/ws
-      # Server-side URLs - apuntan al reverse proxy internamente
-      API_URL: http://reverse-proxy:${REVERSE_PROXY_PORT}/api
-      AUTH_SERVICE_URL: http://reverse-proxy:${REVERSE_PROXY_PORT}/api
-      MATCH_SERVICE_URL: http://reverse-proxy:${REVERSE_PROXY_PORT}/api
-      REFEREE_SERVICE_URL: http://reverse-proxy:${REVERSE_PROXY_PORT}/api
-      AVAILABILITY_SERVICE_URL: http://reverse-proxy:${REVERSE_PROXY_PORT}/api
+      NEXT_PUBLIC_API_URL: http://localhost/api
+      NEXT_PUBLIC_WS_URL: ws://localhost/ws
+      # Server-side URLs
+      API_URL: http://reverse-proxy/api
+      AUTH_SERVICE_URL: http://reverse-proxy/api
+      MATCH_SERVICE_URL: http://reverse-proxy/api
+      REFEREE_SERVICE_URL: http://reverse-proxy/api
+      AVAILABILITY_SERVICE_URL: http://reverse-proxy/api
   # NO exponer el puerto del frontend externamente
   # ports:
   #   - "${FRONTEND_PORT}:${FRONTEND_PORT}"
@@ -523,8 +522,7 @@ services:
     # ports:
     #   - "${FRONT_MOBILE_PORT}:${FRONT_MOBILE_PORT}"
     environment:
-      # Apuntar al reverse proxy
-      - API_GATEWAY_URL=http://reverse-proxy:${REVERSE_PROXY_PORT}/api
+      - API_GATEWAY_URL=http://reverse-proxy/api
     networks:
       - sgad-network
     depends_on:
@@ -555,7 +553,7 @@ services:
       - sgad-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 10s
       retries: 3
