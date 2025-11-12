@@ -309,12 +309,12 @@ services:
   # ============================================
   
   # API Gateway - Spring Boot (Java)
-  api-gateway:
+  api-gateway-1:
     image: sgad-api-gateway:latest
     build:
       context: ./sgad-api-gateway
       dockerfile: Dockerfile
-    container_name: sgad-api-gateway
+    container_name: sgad-api-gateway-1
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
       SERVER_PORT: ${API_GATEWAY_PORT}
@@ -349,6 +349,128 @@ services:
       retries: 3
       start_period: 60s
 
+  # API Gateway - Spring Boot (Java)
+  api-gateway-2:
+    image: sgad-api-gateway:latest
+    build:
+      context: ./sgad-api-gateway
+      dockerfile: Dockerfile
+    container_name: sgad-api-gateway-2
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
+      SERVER_PORT: ${API_GATEWAY_PORT}
+      AUTH_SERVICE_URL: http://auth-service:${AUTH_SERVICE_PORT}
+      REFEREE_SERVICE_URL: http://referee-service:${REFEREE_SERVICE_PORT}
+      AVAILABILITY_SERVICE_URL: http://availability-service:${AVAILABILITY_SERVICE_PORT}
+      MATCH_SERVICE_URL: http://match-service:${MATCH_SERVICE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      LOG_LEVEL: ${LOG_LEVEL}
+    ports:
+      - "8081:${API_GATEWAY_PORT}"
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      referee-service:
+        condition: service_healthy
+      availability-service:
+        condition: service_healthy
+      match-service:
+        condition: service_healthy
+    networks:
+      - sgad-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:${API_GATEWAY_PORT}/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # API Gateway - Spring Boot (Java)
+  api-gateway-3:
+    image: sgad-api-gateway:latest
+    build:
+      context: ./sgad-api-gateway
+      dockerfile: Dockerfile
+    container_name: sgad-api-gateway-3
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
+      SERVER_PORT: ${API_GATEWAY_PORT}
+      AUTH_SERVICE_URL: http://auth-service:${AUTH_SERVICE_PORT}
+      REFEREE_SERVICE_URL: http://referee-service:${REFEREE_SERVICE_PORT}
+      AVAILABILITY_SERVICE_URL: http://availability-service:${AVAILABILITY_SERVICE_PORT}
+      MATCH_SERVICE_URL: http://match-service:${MATCH_SERVICE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      LOG_LEVEL: ${LOG_LEVEL}
+    ports:
+      - "8082:${API_GATEWAY_PORT}"
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      referee-service:
+        condition: service_healthy
+      availability-service:
+        condition: service_healthy
+      match-service:
+        condition: service_healthy
+    networks:
+      - sgad-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:${API_GATEWAY_PORT}/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # API Gateway - Spring Boot (Java)
+  api-gateway-4:
+    image: sgad-api-gateway:latest
+    build:
+      context: ./sgad-api-gateway
+      dockerfile: Dockerfile
+    container_name: sgad-api-gateway-4
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
+      SERVER_PORT: ${API_GATEWAY_PORT}
+      AUTH_SERVICE_URL: http://auth-service:${AUTH_SERVICE_PORT}
+      REFEREE_SERVICE_URL: http://referee-service:${REFEREE_SERVICE_PORT}
+      AVAILABILITY_SERVICE_URL: http://availability-service:${AVAILABILITY_SERVICE_PORT}
+      MATCH_SERVICE_URL: http://match-service:${MATCH_SERVICE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      LOG_LEVEL: ${LOG_LEVEL}
+    ports:
+      - "8083:${API_GATEWAY_PORT}"
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      referee-service:
+        condition: service_healthy
+      availability-service:
+        condition: service_healthy
+      match-service:
+        condition: service_healthy
+    networks:
+      - sgad-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:${API_GATEWAY_PORT}/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
   # ============================================
   # FRONTEND LAYER
   # ============================================
@@ -360,26 +482,26 @@ services:
       context: ./sgad-frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-        NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL}
+        NEXT_PUBLIC_API_URL: http://localhost/api  # Sin puerto si usas 80
+        NEXT_PUBLIC_WS_URL: ws://localhost/ws
     container_name: sgad-frontend
     environment:
       NODE_ENV: ${NODE_ENV}
       PORT: ${FRONTEND_PORT}
-      # Client-side API URLs (accessed from browser)
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
-      NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL}
-      # Server-side API URLs (accessed from Next.js server inside container)
-      API_URL: http://api-gateway:${API_GATEWAY_PORT}
-      AUTH_SERVICE_URL: http://api-gateway:${API_GATEWAY_PORT}
-      MATCH_SERVICE_URL: http://api-gateway:${API_GATEWAY_PORT}
-      REFEREE_SERVICE_URL: http://api-gateway:${API_GATEWAY_PORT}
-      AVAILABILITY_SERVICE_URL: http://api-gateway:${API_GATEWAY_PORT}
-    ports:
-      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+      NEXT_PUBLIC_API_URL: http://localhost/api
+      NEXT_PUBLIC_WS_URL: ws://localhost/ws
+      # Server-side URLs
+      API_URL: http://reverse-proxy/api
+      AUTH_SERVICE_URL: http://reverse-proxy/api
+      MATCH_SERVICE_URL: http://reverse-proxy/api
+      REFEREE_SERVICE_URL: http://reverse-proxy/api
+      AVAILABILITY_SERVICE_URL: http://reverse-proxy/api
+  # NO exponer el puerto del frontend externamente
+  # ports:
+  #   - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     depends_on:
-      api-gateway:
-        condition: service_healthy
+      reverse-proxy:
+        condition: service_started
     networks:
       - sgad-network
     restart: unless-stopped
@@ -396,15 +518,16 @@ services:
       context: ./sgad-mobile
       dockerfile: Dockerfile
     container_name: sgad-mobile
-    ports:
-      - "${FRONT_MOBILE_PORT}:${FRONT_MOBILE_PORT}"
+    # NO exponer el puerto del mobile externamente
+    # ports:
+    #   - "${FRONT_MOBILE_PORT}:${FRONT_MOBILE_PORT}"
     environment:
-      - API_GATEWAY_URL=http://sgad-api-gateway:${API_GATEWAY_PORT}
+      - API_GATEWAY_URL=http://reverse-proxy/api
     networks:
       - sgad-network
     depends_on:
-      api-gateway:
-        condition: service_healthy
+      reverse-proxy:
+        condition: service_started
     restart: unless-stopped
 
   # ============================================
@@ -418,7 +541,19 @@ services:
     ports:
       - "${REVERSE_PROXY_PORT}:${REVERSE_PROXY_PORT}"
     depends_on:
-      api-gateway:
+      api-gateway-1:
+        condition: service_healthy
+      api-gateway-2:
+        condition: service_healthy
+      api-gateway-3:
+        condition: service_healthy
+      api-gateway-4:
         condition: service_healthy
     networks:
       - sgad-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
