@@ -230,6 +230,8 @@ services:
     depends_on:
       postgres-match:
         condition: service_started
+      redis:
+        condition: service_started
     networks:
       - backend-net
       - db-net
