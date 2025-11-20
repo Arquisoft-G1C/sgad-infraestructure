@@ -131,7 +131,7 @@ services:
 
   auth-service:
     build:
-      context: ../sgad-auth-service
+      context: ./sgad-auth-service
       dockerfile: Dockerfile
     container_name: sgad-auth-service
     environment:
@@ -160,7 +160,7 @@ services:
 
   referee-service:
     build:
-      context: ../sgad-referee-management
+      context: ./sgad-referee-management
       dockerfile: Dockerfile
     container_name: sgad-referee-service
     environment:
@@ -185,7 +185,7 @@ services:
 
   availability-service:
     build:
-      context: ../sgad-availability-service
+      context: ./sgad-availability-service
       dockerfile: Dockerfile
     container_name: sgad-availability-service
     environment:
@@ -215,7 +215,7 @@ services:
 
   match-service:
     build:
-      context: ../sgad-match-management
+      context: ./sgad-match-management
       dockerfile: Dockerfile
     container_name: sgad-match-service
     environment:
@@ -242,7 +242,7 @@ services:
   # ============================================
 
   api-gateway-1:
-    build: ../sgad-api-gateway
+    build: ./sgad-api-gateway
     container_name: sgad-api-gateway-1
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
@@ -270,7 +270,7 @@ services:
     restart: unless-stopped
 
   api-gateway-2:
-    build: ../sgad-api-gateway
+    build: ./sgad-api-gateway
     container_name: sgad-api-gateway-2
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
@@ -292,7 +292,7 @@ services:
     restart: unless-stopped
 
   api-gateway-3:
-    build: ../sgad-api-gateway
+    build: ./sgad-api-gateway
     container_name: sgad-api-gateway-3
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
@@ -314,7 +314,7 @@ services:
     restart: unless-stopped
 
   api-gateway-4:
-    build: ../sgad-api-gateway
+    build: ./sgad-api-gateway
     container_name: sgad-api-gateway-4
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE}
@@ -341,7 +341,7 @@ services:
 
   frontend:
     build:
-      context: ../sgad-frontend
+      context: ./sgad-frontend
       dockerfile: Dockerfile
     container_name: sgad-frontend
     environment:
@@ -359,7 +359,7 @@ services:
 
   sgad-mobile:
     build:
-      context: ../sgad-mobile
+      context: ./sgad-mobile
       dockerfile: Dockerfile
     container_name: sgad-mobile
     environment:
@@ -377,11 +377,14 @@ services:
 
   reverse-proxy:
     build:
-      context: ../sgad-reverse-proxy
+      context: ./sgad-reverse-proxy
       dockerfile: Dockerfile
     container_name: sgad-reverse-proxy
     ports:
       - "${REVERSE_PROXY_PORT}:${REVERSE_PROXY_PORT}"
+    volumes:
+      - ./certs:/etc/nginx/ssl
+      - ./sgad-reverse-proxy/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       api-gateway-1:
         condition: service_started
